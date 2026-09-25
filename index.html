@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BNC / COCA English Lookup</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 20px; max-width: 500px; margin: 0 auto; background-color: #f6f8fa; color: #24292f; }
+    h1 { font-size: 22px; text-align: center; margin-bottom: 20px; }
+    .search-box { display: flex; gap: 8px; margin-bottom: 20px; }
+    input[type="text"] { flex: 1; padding: 12px; border: 1px solid #d0d7de; border-radius: 8px; font-size: 16px; outline: none; }
+    button { padding: 12px 18px; background-color: #1f883d; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
+    button:active { background-color: #1a7431; }
+    .results { display: flex; flex-direction: column; gap: 10px; }
+    .card { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: white; border: 1px solid #d0d7de; border-radius: 8px; text-decoration: none; color: #0969da; font-weight: 600; }
+    .card:active { background-color: #f3f4f6; }
+  </style>
+</head>
+<body>
+  <h1>Tra cứu BNC / COCA</h1>
+  <div class="search-box">
+    <input type="text" id="wordInput" placeholder="Nhập từ tiếng Anh..." onkeypress="if(event.key==='Enter') searchWord()">
+    <button onclick="searchWord()">Tra cứu</button>
+  </div>
+  <div class="results" id="results"></div>
+
+  <script>
+    function searchWord() {
+      const word = document.getElementById('wordInput').value.trim().toLowerCase();
+      if (!word) return;
+      const links = [
+        { name: 'COCA (Corpus of Contemporary American)', url: `https://www.english-corpora.org/coca/?c=coca&q=${word}` },
+        { name: 'BNC (British National Corpus)', url: `https://www.english-corpora.org/bnc/?c=bnc&q=${word}` },
+        { name: 'Cambridge Dictionary', url: `https://dictionary.cambridge.org/dictionary/english/${word}` },
+        { name: 'YouGlish (Phát âm ngữ cảnh)', url: `https://youglish.com/pronounce/${word}/english` }
+      ];
+      document.getElementById('results').innerHTML = links.map(l => 
+        `<a class="card" href="${l.url}" target="_blank"><span>${l.name}</span> ↗</a>`
+      ).join('');
+    }
+  </script>
+</body>
+</html>
